@@ -1,3 +1,6 @@
+mod square;
+
 fn main() {
-    println!("Hello, world!");
+    let square = square::Square::new(0);
+    println!("{:?}", square);
 }
