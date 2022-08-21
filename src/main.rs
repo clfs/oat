@@ -1,6 +1,10 @@
-mod square;
+mod engine;
+mod uci;
 
 fn main() {
-    let square = square::Square::new(0);
-    println!("{:?}", square);
+    uci::run(
+        &mut std::io::stdin().lock(),
+        &mut std::io::stdout(),
+        &mut engine::Engine::new(),
+    );
 }
