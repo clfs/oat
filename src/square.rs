@@ -1,6 +1,6 @@
 use std::mem;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 #[repr(u8)]
 pub enum Square {
     A1,
@@ -79,5 +79,16 @@ impl Square {
     pub const fn new(index: u8) -> Square {
         assert!(index < 64);
         unsafe { mem::transmute(index) }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new() {
+        let s = Square::new(0);
+        assert_eq!(s, Square::A1);
     }
 }
