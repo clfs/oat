@@ -7,7 +7,6 @@ repository = "https://github.com/clfs/aloe"
 authors = ["Calvin Figuereo-Supraner <mail@calvin.page>"]
 readme = "README.md"
 license = "MIT"
-license-file = "LICENSE"
 publish = false
 
 [dependencies]
