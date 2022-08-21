@@ -1,9 +1,9 @@
-use uci::ParseError;
+use std::error::Error;
 
 mod engine;
 mod uci;
 
-fn main() -> Result<(), ParseError> {
+fn main() -> Result<(), Box<dyn Error>> {
     uci::run(
         &mut std::io::stdin(),
         &mut std::io::stdout(),

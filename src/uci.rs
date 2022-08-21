@@ -1,3 +1,5 @@
+use std::error::Error;
+use std::fmt;
 use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Read;
@@ -5,30 +7,38 @@ use std::io::Write;
 
 use crate::engine::Engine;
 
-pub fn run<R, W>(reader: &mut R, writer: &mut W, engine: &mut Engine) -> Result<(), ParseError>
+pub fn run<R, W>(reader: &mut R, writer: &mut W, engine: &mut Engine) -> Result<(), Box<dyn Error>>
 where
     R: Read,
     W: Write,
 {
-    for line in BufReader::new(reader).lines() {
-        match parse(line.unwrap()) {
-            Ok(message) => match message {
+    let buf_reader = BufReader::new(reader);
+
+    for line in buf_reader.lines() {
+        match parse(line?) {
+            Err(_) => {
+                writeln!(writer, "unknown command")?;
+            }
+            Ok(msg) => match msg {
+                Message::Uci => {
+                    writeln!(writer, "id name {}", env!("CARGO_PKG_NAME"))?;
+                    writeln!(writer, "id author {}", env!("CARGO_PKG_AUTHORS"))?;
+                    writeln!(writer, "uciok")?;
+                }
                 Message::IsReady => {
-                    writeln!(writer, "readyok").unwrap();
+                    writeln!(writer, "readyok")?;
                 }
                 Message::Quit => {
                     return Ok(());
                 }
                 _ => {
-                    writeln!(writer, "not yet handled!").unwrap();
+                    writeln!(writer, "not handled yet")?;
                 }
             },
-            Err(err) => {
-                return Err(err);
-            }
         }
         engine.noop();
     }
+
     return Ok(());
 }
 
@@ -74,9 +84,27 @@ pub enum Message {
 
 #[derive(Debug)]
 pub struct ParseError {
-    pub line: String,
+    line: String,
+}
+
+impl ParseError {
+    pub fn new(line: String) -> ParseError {
+        ParseError { line }
+    }
+}
+
+impl fmt::Display for ParseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.line)
+    }
+}
+
+impl Error for ParseError {
+    fn description(&self) -> &str {
+        &self.line
+    }
 }
 
 pub fn parse(line: String) -> Result<Message, ParseError> {
-    Err(ParseError { line })
+    Err(ParseError::new(line))
 }
