@@ -42,6 +42,7 @@ where
     return Ok(());
 }
 
+#[derive(Debug, PartialEq)]
 pub enum TimeControl {
     Ponder,
     Explicit {
@@ -57,6 +58,7 @@ pub enum TimeControl {
     Infinite,
 }
 
+#[derive(Debug, PartialEq)]
 pub enum Message {
     Uci,
     Debug(bool),
@@ -107,4 +109,27 @@ impl Error for ParseError {
 
 pub fn parse(line: String) -> Result<Message, ParseError> {
     Err(ParseError::new(line))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_uci() {
+        let line = "uci".to_string();
+        assert_eq!(parse(line).unwrap(), Message::Uci);
+    }
+
+    #[test]
+    fn test_parse_debug_on() {
+        let line = "debug on".to_string();
+        assert_eq!(parse(line).unwrap(), Message::Debug(true));
+    }
+
+    #[test]
+    fn test_parse_debug_off() {
+        let line = "debug off".to_string();
+        assert_eq!(parse(line).unwrap(), Message::Debug(false));
+    }
 }
