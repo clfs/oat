@@ -16,25 +16,23 @@ where
 
     for line in buf_reader.lines() {
         match parse(line?) {
-            Err(_) => {
-                writeln!(writer, "unknown command")?;
+            Message::Unknown(_) => {
+                // Do nothing.
             }
-            Ok(msg) => match msg {
-                Message::Uci => {
-                    writeln!(writer, "id name {}", env!("CARGO_PKG_NAME"))?;
-                    writeln!(writer, "id author {}", env!("CARGO_PKG_AUTHORS"))?;
-                    writeln!(writer, "uciok")?;
-                }
-                Message::IsReady => {
-                    writeln!(writer, "readyok")?;
-                }
-                Message::Quit => {
-                    return Ok(());
-                }
-                _ => {
-                    writeln!(writer, "not handled yet")?;
-                }
-            },
+            Message::Uci => {
+                writeln!(writer, "id name {}", env!("CARGO_PKG_NAME"))?;
+                writeln!(writer, "id author {}", env!("CARGO_PKG_AUTHORS"))?;
+                writeln!(writer, "uciok")?;
+            }
+            Message::IsReady => {
+                writeln!(writer, "readyok")?;
+            }
+            Message::Quit => {
+                return Ok(());
+            }
+            _ => {
+                writeln!(writer, "not handled yet")?;
+            }
         }
         engine.noop();
     }
@@ -60,6 +58,7 @@ pub enum TimeControl {
 
 #[derive(Debug, PartialEq)]
 pub enum Message {
+    Unknown(String),
     Uci,
     Debug(bool),
     IsReady,
@@ -107,8 +106,8 @@ impl Error for ParseError {
     }
 }
 
-pub fn parse(line: String) -> Result<Message, ParseError> {
-    Err(ParseError::new(line))
+pub fn parse(line: String) -> Message {
+    Message::Unknown(line)
 }
 
 #[cfg(test)]
@@ -118,18 +117,18 @@ mod tests {
     #[test]
     fn test_parse_uci() {
         let line = "uci".to_string();
-        assert_eq!(parse(line).unwrap(), Message::Uci);
+        assert_eq!(parse(line), Message::Uci);
     }
 
     #[test]
     fn test_parse_debug_on() {
         let line = "debug on".to_string();
-        assert_eq!(parse(line).unwrap(), Message::Debug(true));
+        assert_eq!(parse(line), Message::Debug(true));
     }
 
     #[test]
     fn test_parse_debug_off() {
         let line = "debug off".to_string();
-        assert_eq!(parse(line).unwrap(), Message::Debug(false));
+        assert_eq!(parse(line), Message::Debug(false));
     }
 }
