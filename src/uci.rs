@@ -3,6 +3,7 @@ use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Read;
 use std::io::Write;
+use std::str::FromStr;
 
 use crate::engine::Engine;
 
@@ -16,12 +17,17 @@ where
     let buf_reader = BufReader::new(reader);
 
     for line in buf_reader.lines() {
-        match parse(line?) {
+        match line?.parse()? {
             Message::Unknown(_) => {
                 // Do nothing.
             }
             Message::Uci => {
-                writeln!(writer, "id name {}", env!("CARGO_PKG_NAME"))?;
+                writeln!(
+                    writer,
+                    "id name {}{}",
+                    env!("CARGO_PKG_NAME"),
+                    env!("CARGO_PKG_VERSION")
+                )?;
                 writeln!(writer, "id author {}", env!("CARGO_PKG_AUTHORS"))?;
                 writeln!(writer, "uciok")?;
             }
@@ -83,17 +89,21 @@ pub enum Message {
     Unknown(String),
 }
 
-pub fn parse(line: String) -> Message {
-    let mut words = line.split_whitespace();
-    let command = words.next().unwrap();
-    match command {
-        "uci" => Message::Uci,
-        "isready" => Message::IsReady,
-        "ucinewgame" => Message::UciNewGame,
-        "stop" => Message::Stop,
-        "ponderhit" => Message::PonderHit,
-        "quit" => Message::Quit,
-        _ => Message::Unknown(line.clone()),
+impl FromStr for Message {
+    type Err = Box<dyn Error>;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let mut words = s.split_whitespace();
+        let command = words.next().unwrap();
+        match command {
+            "uci" => Ok(Message::Uci),
+            "isready" => Ok(Message::IsReady),
+            "ucinewgame" => Ok(Message::UciNewGame),
+            "stop" => Ok(Message::Stop),
+            "ponderhit" => Ok(Message::PonderHit),
+            "quit" => Ok(Message::Quit),
+            _ => Ok(Message::Unknown(s.to_string())),
+        }
     }
 }
 
@@ -105,10 +115,13 @@ mod tests {
         ($name:ident, $input:expr, $want:expr) => {
             #[test]
             fn $name() {
-                let line = $input.to_string();
+                let input = $input;
                 let want = $want;
-                let got = parse(line);
-                assert_eq!(want, got);
+                let got = Message::from_str(input);
+                match got {
+                    Ok(got) => assert_eq!(got, want),
+                    Err(err) => panic!("{:?}", err),
+                }
             }
         };
     }
