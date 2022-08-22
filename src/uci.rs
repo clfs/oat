@@ -59,7 +59,6 @@ pub enum TimeControl {
 pub enum Message {
     Unknown(String),
     Uci,
-    Debug(bool),
     IsReady,
     SetOption {
         name: String,
@@ -94,17 +93,5 @@ mod tests {
     fn test_parse_uci() {
         let line = "uci".to_string();
         assert_eq!(parse(line), Message::Uci);
-    }
-
-    #[test]
-    fn test_parse_debug_on() {
-        let line = "debug on".to_string();
-        assert_eq!(parse(line), Message::Debug(true));
-    }
-
-    #[test]
-    fn test_parse_debug_off() {
-        let line = "debug off".to_string();
-        assert_eq!(parse(line), Message::Debug(false));
     }
 }
