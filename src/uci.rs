@@ -24,7 +24,7 @@ where
             Message::Uci => {
                 writeln!(
                     writer,
-                    "id name {}{}",
+                    "id name {}-{}",
                     env!("CARGO_PKG_NAME"),
                     env!("CARGO_PKG_VERSION")
                 )?;
