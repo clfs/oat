@@ -59,7 +59,6 @@ pub enum TimeControl {
 
 #[derive(Debug, PartialEq)]
 pub enum Message {
-    Unknown(String),
     Uci,
     IsReady,
     SetOption {
@@ -81,10 +80,21 @@ pub enum Message {
     Stop,
     PonderHit,
     Quit,
+    Unknown(String),
 }
 
 pub fn parse(line: String) -> Message {
-    Message::Unknown(line)
+    let mut words = line.split_whitespace();
+    let command = words.next().unwrap();
+    match command {
+        "uci" => Message::Uci,
+        "isready" => Message::IsReady,
+        "ucinewgame" => Message::UciNewGame,
+        "stop" => Message::Stop,
+        "ponderhit" => Message::PonderHit,
+        "quit" => Message::Quit,
+        _ => Message::Unknown(line.clone()),
+    }
 }
 
 #[cfg(test)]
@@ -102,12 +112,6 @@ mod tests {
             }
         };
     }
-
-    test_parse!(
-        test_parse_unknown,
-        "foo bar",
-        Message::Unknown("foo bar".to_string())
-    );
 
     test_parse!(test_parse_uci, "uci", Message::Uci);
 
@@ -204,4 +208,10 @@ mod tests {
     test_parse!(test_parse_ponderhit, "ponderhit", Message::PonderHit);
 
     test_parse!(test_parse_quit, "quit", Message::Quit);
+
+    test_parse!(
+        test_parse_unknown,
+        "foo bar",
+        Message::Unknown("foo bar".to_string())
+    );
 }
