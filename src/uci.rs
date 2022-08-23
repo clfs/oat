@@ -94,11 +94,29 @@ impl FromStr for Message {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut words = s.split_whitespace();
-        let command = words.next().unwrap();
+        let command = words.next().ok_or("no command")?;
         match command {
             "uci" => Ok(Message::Uci),
             "isready" => Ok(Message::IsReady),
+            // TODO: Implement the "setoption" command correctly.
+            "setoption" => Ok(Message::SetOption {
+                name: "foo".to_string(),
+                value: None,
+            }),
             "ucinewgame" => Ok(Message::UciNewGame),
+            // TODO: Implement the "position" command correctly.
+            "position" => Ok(Message::Position {
+                fen: STARTPOS.to_string(),
+                moves: Vec::new(),
+            }),
+            // TODO: Implement the "go" command correctly.
+            "go" => Ok(Message::Go {
+                time_control: Some(TimeControl::Infinite),
+                search_moves: Vec::new(),
+                mate: None,
+                depth: None,
+                nodes: None,
+            }),
             "stop" => Ok(Message::Stop),
             "ponderhit" => Ok(Message::PonderHit),
             "quit" => Ok(Message::Quit),
@@ -145,6 +163,33 @@ mod tests {
         Message::SetOption {
             name: "foo".to_string(),
             value: None,
+        }
+    );
+
+    test_parse!(
+        test_parse_setoption_multiword_name,
+        "setoption name foo bar value baz",
+        Message::SetOption {
+            name: "foo bar".to_string(),
+            value: Some("baz".to_string()),
+        }
+    );
+
+    test_parse!(
+        test_parse_setoption_multiword_name_no_value,
+        "setoption name foo bar",
+        Message::SetOption {
+            name: "foo bar".to_string(),
+            value: None,
+        }
+    );
+
+    test_parse!(
+        test_parse_setoption_multiword_name_and_value,
+        "setoption name foo bar value baz qux",
+        Message::SetOption {
+            name: "foo bar".to_string(),
+            value: Some("baz qux".to_string()),
         }
     );
 
