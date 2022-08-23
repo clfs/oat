@@ -7,9 +7,9 @@ use std::str::FromStr;
 
 use crate::engine::Engine;
 
-const STARTPOS: &str = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+const STARTPOS: &'static str = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-pub fn run<R, W>(reader: &mut R, writer: &mut W, engine: &mut Engine) -> Result<(), Box<dyn Error>>
+pub fn run<R, W>(reader: &mut R, writer: &mut W, _engine: &mut Engine) -> Result<(), Box<dyn Error>>
 where
     R: Read,
     W: Write,
@@ -62,13 +62,12 @@ where
                 writeln!(writer, "unknown command: {}", s)?;
             }
         }
-        engine.noop();
     }
 
-    Ok(())
+    return Ok(());
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub enum TimeControl {
     Ponder,
     Explicit {
@@ -84,7 +83,7 @@ pub enum TimeControl {
     Infinite,
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq)]
 pub enum Message {
     Uci,
     IsReady,
