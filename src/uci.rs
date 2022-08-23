@@ -18,9 +18,6 @@ where
 
     for line in buf_reader.lines() {
         match line?.parse()? {
-            Message::Unknown(_) => {
-                // Do nothing.
-            }
             Message::Uci => {
                 writeln!(
                     writer,
@@ -36,6 +33,9 @@ where
             }
             Message::Quit => {
                 return Ok(());
+            }
+            Message::Unknown(s) => {
+                writeln!(writer, "unknown command: {}", s)?;
             }
             _ => {
                 writeln!(writer, "not handled yet")?;
