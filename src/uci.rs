@@ -31,14 +31,35 @@ where
             Message::IsReady => {
                 writeln!(writer, "readyok")?;
             }
+            // TODO: Implement.
+            Message::SetOption { .. } => {
+                writeln!(writer, "setoption not handled yet")?;
+            }
+            // TODO: Implement.
+            Message::UciNewGame => {
+                writeln!(writer, "ucinewgame not handled yet")?;
+            }
+            // TODO: Implement.
+            Message::Position { .. } => {
+                writeln!(writer, "position not handled yet")?;
+            }
+            // TODO: Implement.
+            Message::Go { .. } => {
+                writeln!(writer, "go not handled yet")?;
+            }
+            // TODO: Implement.
+            Message::Stop => {
+                writeln!(writer, "stop not handled yet")?;
+            }
+            // TODO: Implement.
+            Message::PonderHit => {
+                writeln!(writer, "ponderhit not handled yet")?;
+            }
             Message::Quit => {
                 return Ok(());
             }
             Message::Unknown(s) => {
                 writeln!(writer, "unknown command: {}", s)?;
-            }
-            _ => {
-                writeln!(writer, "not handled yet")?;
             }
         }
         engine.noop();
@@ -133,11 +154,8 @@ mod tests {
         ($name:ident, $input:expr, $want:expr) => {
             #[test]
             fn $name() {
-                let input = $input;
-                let want = $want;
-                let got = Message::from_str(input);
-                match got {
-                    Ok(got) => assert_eq!(got, want),
+                match Message::from_str($input) {
+                    Ok(got) => assert_eq!(got, $want),
                     Err(err) => panic!("{:?}", err),
                 }
             }
