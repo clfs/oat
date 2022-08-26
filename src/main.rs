@@ -1,6 +1,9 @@
 use std::error::Error;
 
 mod engine;
+mod file;
+mod rank;
+mod square;
 mod uci;
 
 fn main() -> Result<(), Box<dyn Error>> {
