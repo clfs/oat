@@ -1,6 +1,4 @@
-use crate::file;
 use crate::file::File;
-use crate::rank;
 use crate::rank::Rank;
 
 #[derive(Debug, PartialEq)]
@@ -79,8 +77,9 @@ impl Square {
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
+    use crate::file;
+    use crate::rank;
 
     #[test]
     fn test_new() {
