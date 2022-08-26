@@ -1,7 +1,7 @@
 use crate::file::File;
 use crate::rank::Rank;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Square(pub u8);
 
 pub const A1: Square = Square(0);
