@@ -1,17 +1,17 @@
-# aloe
+# oat
 A chess engine.
 
 ## Installation
 Use Rust's package manager, `cargo`.
 
-Install or upgrade `aloe`:
+Install or upgrade `oat`:
 ```text
-cargo install --git https://github.com/clfs/aloe
+cargo install --git https://github.com/clfs/oat
 ```
 
-Uninstall `aloe`:
+Uninstall `oat`:
 ```text
-cargo uninstall aloe
+cargo uninstall oat
 ```
 
 ## Usage
