@@ -1,6 +1,6 @@
 [package]
 name = "oat"
-version = "0.1.0"
+version = "0.1.1"
 description = "A chess engine"
 edition = "2021"
 repository = "https://github.com/clfs/oat"
