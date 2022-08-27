@@ -1,8 +1,11 @@
 use std::error::Error;
 
+mod color;
 mod engine;
 mod file;
+mod piece;
 mod rank;
+mod role;
 mod square;
 mod uci;
 
