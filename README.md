@@ -6,7 +6,7 @@ Use Rust's package manager, `cargo`.
 
 Install or upgrade `oat`:
 ```text
-cargo install --git https://github.com/clfs/oat
+cargo install oat
 ```
 
 Uninstall `oat`:
@@ -18,10 +18,6 @@ cargo uninstall oat
 ```text
 TBD
 ```
-
-## Documentation
-Run `cargo doc` from the repository root to generate documentation. Use the
-`--open`` flag to automatically open the documentation in your browser.
 
 ## Contributing
 Pull requests are welcome. For major changes, open an issue first to discuss
