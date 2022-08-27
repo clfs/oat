@@ -19,6 +19,10 @@ cargo uninstall aloe
 TBD
 ```
 
+## Documentation
+Run `cargo doc` from the repository root to generate documentation. Use the
+`--open`` flag to automatically open the documentation in your browser.
+
 ## Contributing
 Pull requests are welcome. For major changes, open an issue first to discuss
 what you'd like to change.
