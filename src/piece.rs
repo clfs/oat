@@ -1,7 +1,8 @@
-use crate::color::Color;
-use crate::role::Role;
-
-pub struct Piece {
-    pub color: Color,
-    pub role: Role,
+pub enum Piece {
+    Pawn,
+    Knight,
+    Bishop,
+    Rook,
+    Queen,
+    King,
 }
