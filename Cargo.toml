@@ -7,6 +7,5 @@ repository = "https://github.com/clfs/oat"
 authors = ["Calvin Figuereo-Supraner <mail@calvin.page>"]
 readme = "README.md"
 license = "MIT"
-publish = false
 
 [dependencies]
