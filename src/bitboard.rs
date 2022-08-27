@@ -1,3 +1,3 @@
-pub struct Bitboard(u64);
+pub struct Bitboard(pub u64);
 
 impl Bitboard {}
