@@ -1,9 +1,12 @@
 use std::error::Error;
 
+mod bitboard;
+mod board;
 mod color;
 mod engine;
 mod file;
 mod piece;
+mod position;
 mod rank;
 mod role;
 mod square;
