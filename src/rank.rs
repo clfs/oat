@@ -1,10 +1,19 @@
-pub struct Rank(pub u8);
+#[derive(Debug, PartialEq)]
+#[repr(u8)]
+pub enum Rank {
+    One,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+}
 
-pub const ONE: Rank = Rank(0);
-pub const TWO: Rank = Rank(1);
-pub const THREE: Rank = Rank(2);
-pub const FOUR: Rank = Rank(3);
-pub const FIVE: Rank = Rank(4);
-pub const SIX: Rank = Rank(5);
-pub const SEVEN: Rank = Rank(6);
-pub const EIGHT: Rank = Rank(7);
+impl Rank {
+    pub fn new_from_index(i: u8) -> Rank {
+        assert!(i < 8);
+        unsafe { std::mem::transmute(i) }
+    }
+}

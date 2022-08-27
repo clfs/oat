@@ -1,10 +1,19 @@
-pub struct File(pub u8);
+#[derive(Debug, PartialEq)]
+#[repr(u8)]
+pub enum File {
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
+}
 
-pub const A: File = File(0);
-pub const B: File = File(1);
-pub const C: File = File(2);
-pub const D: File = File(3);
-pub const E: File = File(4);
-pub const F: File = File(5);
-pub const G: File = File(6);
-pub const H: File = File(7);
+impl File {
+    pub fn new_from_index(i: u8) -> File {
+        assert!(i < 8);
+        unsafe { std::mem::transmute(i) }
+    }
+}
