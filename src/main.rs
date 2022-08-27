@@ -8,6 +8,7 @@ mod file;
 mod piece;
 mod position;
 mod rank;
+mod role;
 mod square;
 mod uci;
 
