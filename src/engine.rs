@@ -1,15 +1,15 @@
-use vampirc_uci::{UciFen, UciMove};
+use crate::position::Position;
 
-pub struct Engine {}
+pub struct Engine {
+    position: Position,
+}
 
 impl Engine {
     pub fn new() -> Engine {
-        Engine {}
+        Engine {
+            position: Position::default(),
+        }
     }
 
     pub fn new_game(&self) {}
-
-    pub fn new_game_from_uci_fen(&self, fen: UciFen) {}
-
-    pub fn make_uci_move(&self, move_uci: UciMove) {}
 }

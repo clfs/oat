@@ -1,5 +1,6 @@
 use crate::bitboard::Bitboard;
 
+#[derive(Default)]
 pub struct Board {
     white: Bitboard,
     black: Bitboard,

@@ -1,7 +1,5 @@
 use std::error::Error;
 use std::io::BufRead;
-use std::io::BufReader;
-use std::io::Read;
 use std::io::Write;
 
 use vampirc_uci::{parse_one, UciMessage};
