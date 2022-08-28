@@ -15,39 +15,35 @@ fn id() -> UciMessage {
     }
 }
 
-pub fn run<R, W>(reader: &mut R, writer: &mut W, engine: &mut Engine) -> Result<(), Box<dyn Error>>
-where
-    R: Read,
-    W: Write,
-{
-    let buf_reader = BufReader::new(reader);
+pub struct Adapter<'a, R: BufRead, W: Write> {
+    engine: &'a mut Engine,
+    reader: &'a mut R,
+    writer: &'a mut W,
+}
 
-    for line in buf_reader.lines() {
-        match parse_one(&line?) {
-            UciMessage::Uci => {
-                writeln!(writer, "{}", id())?;
-                writeln!(writer, "{}", UciMessage::UciOk)?;
-            }
-            UciMessage::UciNewGame => {
-                engine.new_game();
-            }
-            UciMessage::Position {
-                startpos,
-                fen,
-                moves,
-            } => {
-                if startpos {
-                    engine.new_game();
-                } else {
-                    engine.new_game_from_uci_fen(fen.unwrap());
-                }
-                for m in moves {
-                    engine.make_uci_move(m);
-                }
-            }
-            _ => {}
+impl<R: BufRead, W: Write> Adapter<'_, R, W> {
+    pub fn new<'a>(
+        engine: &'a mut Engine,
+        reader: &'a mut R,
+        writer: &'a mut W,
+    ) -> Adapter<'a, R, W> {
+        Adapter {
+            engine,
+            reader,
+            writer,
         }
     }
 
-    Ok(())
+    pub fn run(&mut self) -> Result<(), Box<dyn Error>> {
+        for line in self.reader.lines() {
+            match parse_one(&line?) {
+                UciMessage::Uci => {
+                    writeln!(self.writer, "{}", id())?;
+                    writeln!(self.writer, "{}", UciMessage::UciOk)?;
+                }
+                _ => {}
+            }
+        }
+        Ok(())
+    }
 }

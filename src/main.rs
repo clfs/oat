@@ -13,9 +13,10 @@ mod square;
 mod uci;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    uci::run(
-        &mut std::io::stdin(),
-        &mut std::io::stdout(),
+    uci::Adapter::new(
         &mut engine::Engine::new(),
+        &mut std::io::stdin().lock(),
+        &mut std::io::stdout(),
     )
+    .run()
 }
