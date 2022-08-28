@@ -1,56 +1,69 @@
 use crate::bitboard::Bitboard;
 use crate::color::Color;
+use crate::color::NUM_COLORS;
+use crate::piece::Piece;
 use crate::role::Role;
+use crate::role::NUM_ROLES;
 
 #[derive(Default)]
 pub struct Board {
-    white: Bitboard,
-    black: Bitboard,
-    pawns: Bitboard,
-    knights: Bitboard,
-    bishops: Bitboard,
-    rooks: Bitboard,
-    queens: Bitboard,
-    kings: Bitboard,
+    colors: [Bitboard; NUM_COLORS],
+    roles: [Bitboard; NUM_ROLES],
 }
 
 impl Board {
     pub fn new() -> Self {
         Board {
-            white: Bitboard(0),
-            black: Bitboard(0),
-            pawns: Bitboard(0),
-            knights: Bitboard(0),
-            bishops: Bitboard(0),
-            rooks: Bitboard(0),
-            queens: Bitboard(0),
-            kings: Bitboard(0),
+            colors: [Bitboard(0); NUM_COLORS],
+            roles: [Bitboard(0); NUM_ROLES],
         }
     }
 
     pub fn white(&self) -> Bitboard {
-        self.white
+        self.colors[Color::White as usize]
     }
 
     pub fn black(&self) -> Bitboard {
-        self.black
+        self.colors[Color::Black as usize]
     }
 
     pub fn by_color(&self, color: Color) -> Bitboard {
-        match color {
-            Color::White => self.white(),
-            Color::Black => self.black(),
-        }
+        self.colors[color as usize]
+    }
+
+    pub fn pawns(&self) -> Bitboard {
+        self.roles[Role::Pawn as usize]
+    }
+
+    pub fn knights(&self) -> Bitboard {
+        self.roles[Role::Knight as usize]
+    }
+
+    pub fn bishops(&self) -> Bitboard {
+        self.roles[Role::Bishop as usize]
+    }
+
+    pub fn rooks(&self) -> Bitboard {
+        self.roles[Role::Rook as usize]
+    }
+
+    pub fn queens(&self) -> Bitboard {
+        self.roles[Role::Queen as usize]
+    }
+
+    pub fn kings(&self) -> Bitboard {
+        self.roles[Role::King as usize]
     }
 
     pub fn by_role(&self, role: Role) -> Bitboard {
-        match role {
-            Role::Pawn => self.pawns,
-            Role::Knight => self.knights,
-            Role::Bishop => self.bishops,
-            Role::Rook => self.rooks,
-            Role::Queen => self.queens,
-            Role::King => self.kings,
-        }
+        self.roles[role as usize]
+    }
+
+    pub fn by_piece(&self, piece: Piece) -> Bitboard {
+        self.by_color(piece.color) & self.by_role(piece.role)
+    }
+
+    pub fn occupied(&self) -> Bitboard {
+        self.white() | self.black()
     }
 }

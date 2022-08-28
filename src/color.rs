@@ -1,3 +1,5 @@
+pub const NUM_COLORS: usize = 2;
+
 #[repr(u8)]
 pub enum Color {
     White,
