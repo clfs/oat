@@ -1,9 +1,9 @@
 use crate::bitboard::Bitboard;
-use crate::color::Color;
-use crate::color::NUM_COLORS;
-use crate::piece::Piece;
-use crate::role::Role;
-use crate::role::NUM_ROLES;
+use crate::chess::color::Color;
+use crate::chess::color::NUM_COLORS;
+use crate::chess::piece::Piece;
+use crate::chess::role::Role;
+use crate::chess::role::NUM_ROLES;
 
 #[derive(Default)]
 pub struct Board {

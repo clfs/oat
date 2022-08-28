@@ -1,4 +1,4 @@
-use crate::position::Position;
+use crate::chess::position::Position;
 
 pub struct Engine {
     position: Position,

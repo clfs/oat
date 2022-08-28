@@ -1,5 +1,5 @@
-use crate::file::File;
-use crate::rank::Rank;
+use crate::chess::file::File;
+use crate::chess::rank::Rank;
 
 #[derive(Debug, PartialEq, Eq)]
 #[rustfmt::skip]
@@ -38,8 +38,8 @@ impl Square {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::file::File;
-    use crate::rank::Rank;
+    use crate::chess::file::File;
+    use crate::chess::rank::Rank;
 
     #[test]
     fn test_new() {

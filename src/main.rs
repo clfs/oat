@@ -2,16 +2,19 @@
 use std::error::Error;
 
 mod bitboard;
-mod board;
-mod color;
+mod chess {
+    pub mod board;
+    pub mod color;
+    pub mod file;
+    pub mod moves;
+    pub mod piece;
+    pub mod position;
+    pub mod rank;
+    pub mod role;
+    pub mod square;
+}
 mod engine;
-mod file;
-mod moves;
-mod piece;
-mod position;
-mod rank;
-mod role;
-mod square;
+
 mod uci;
 
 fn main() -> Result<(), Box<dyn Error>> {

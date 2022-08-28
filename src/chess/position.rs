@@ -1,4 +1,4 @@
-use crate::board::Board;
+use crate::chess::board::Board;
 
 #[derive(Default)]
 pub struct Position {
