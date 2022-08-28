@@ -42,10 +42,7 @@ impl<R: BufRead, W: Write> Adapter<'_, R, W> {
                 UciMessage::UciNewGame => {
                     self.engine.new_game();
                 }
-                UciMessage::Go {
-                    time_control,
-                    search_control,
-                } => {}
+                UciMessage::Go { .. } => {}
                 _ => {}
             }
         }
