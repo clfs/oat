@@ -39,10 +39,9 @@ impl<R: BufRead, W: Write> Adapter<'_, R, W> {
                     writeln!(self.writer, "{}", id())?;
                     writeln!(self.writer, "{}", UciMessage::UciOk)?;
                 }
-                UciMessage::UciNewGame => {
-                    self.engine.new_game();
+                UciMessage::IsReady {} => {
+                    writeln!(self.writer, "{}", UciMessage::ReadyOk)?;
                 }
-                UciMessage::Go { .. } => {}
                 _ => {}
             }
         }

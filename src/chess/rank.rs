@@ -12,7 +12,7 @@ pub enum Rank {
 }
 
 impl Rank {
-    pub fn new_from_index(i: u8) -> Rank {
+    pub fn new_from_index(i: u8) -> Self {
         assert!(i < 8);
         unsafe { std::mem::transmute(i) }
     }

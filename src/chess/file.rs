@@ -12,7 +12,7 @@ pub enum File {
 }
 
 impl File {
-    pub fn new_from_index(i: u8) -> File {
+    pub fn new_from_index(i: u8) -> Self {
         assert!(i < 8);
         unsafe { std::mem::transmute(i) }
     }

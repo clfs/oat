@@ -4,17 +4,17 @@ pub struct Bitboard(pub u64);
 impl Bitboard {}
 
 impl std::ops::BitOr for Bitboard {
-    type Output = Bitboard;
+    type Output = Self;
 
-    fn bitor(self, rhs: Bitboard) -> Bitboard {
-        Bitboard(self.0 | rhs.0)
+    fn bitor(self, rhs: Self) -> Self {
+        Self(self.0 | rhs.0)
     }
 }
 
 impl std::ops::BitAnd for Bitboard {
-    type Output = Bitboard;
+    type Output = Self;
 
-    fn bitand(self, rhs: Bitboard) -> Bitboard {
-        Bitboard(self.0 & rhs.0)
+    fn bitand(self, rhs: Self) -> Self {
+        Self(self.0 & rhs.0)
     }
 }

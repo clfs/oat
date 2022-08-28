@@ -5,11 +5,9 @@ pub struct Engine {
 }
 
 impl Engine {
-    pub fn new() -> Engine {
-        Engine {
+    pub fn new() -> Self {
+        Self {
             position: Position::default(),
         }
     }
-
-    pub fn new_game(&self) {}
 }

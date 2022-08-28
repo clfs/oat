@@ -7,14 +7,14 @@ pub enum Color {
 }
 
 impl Color {
-    pub fn opposite(self) -> Color {
+    pub const fn opposite(self) -> Self {
         match self {
-            Color::White => Color::Black,
-            Color::Black => Color::White,
+            Self::White => Self::Black,
+            Self::Black => Self::White,
         }
     }
 
-    pub fn new_from_index(i: u8) -> Color {
+    pub fn new_from_index(i: u8) -> Self {
         assert!(i < 2);
         unsafe { std::mem::transmute(i) }
     }

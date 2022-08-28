@@ -16,12 +16,12 @@ pub enum Square {
 
 impl Square {
     /// Return a square corresponding to the file and rank.
-    pub fn new(file: File, rank: Rank) -> Square {
-        Square::new_from_index((file as u8) << 3 | rank as u8)
+    pub fn new(file: File, rank: Rank) -> Self {
+        Self::new_from_index((file as u8) << 3 | rank as u8)
     }
 
     /// Return a square by index.
-    pub fn new_from_index(i: u8) -> Square {
+    pub fn new_from_index(i: u8) -> Self {
         assert!(i < 64);
         unsafe { std::mem::transmute(i) }
     }

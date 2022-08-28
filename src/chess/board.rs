@@ -12,50 +12,50 @@ pub struct Board {
 }
 
 impl Board {
-    pub fn new() -> Self {
-        Board {
+    pub const fn new() -> Self {
+        Self {
             colors: [Bitboard(0); NUM_COLORS],
             roles: [Bitboard(0); NUM_ROLES],
         }
     }
 
-    pub fn white(&self) -> Bitboard {
+    pub const fn white(&self) -> Bitboard {
         self.colors[Color::White as usize]
     }
 
-    pub fn black(&self) -> Bitboard {
+    pub const fn black(&self) -> Bitboard {
         self.colors[Color::Black as usize]
     }
 
-    pub fn by_color(&self, color: Color) -> Bitboard {
+    pub const fn by_color(&self, color: Color) -> Bitboard {
         self.colors[color as usize]
     }
 
-    pub fn pawns(&self) -> Bitboard {
+    pub const fn pawns(&self) -> Bitboard {
         self.roles[Role::Pawn as usize]
     }
 
-    pub fn knights(&self) -> Bitboard {
+    pub const fn knights(&self) -> Bitboard {
         self.roles[Role::Knight as usize]
     }
 
-    pub fn bishops(&self) -> Bitboard {
+    pub const fn bishops(&self) -> Bitboard {
         self.roles[Role::Bishop as usize]
     }
 
-    pub fn rooks(&self) -> Bitboard {
+    pub const fn rooks(&self) -> Bitboard {
         self.roles[Role::Rook as usize]
     }
 
-    pub fn queens(&self) -> Bitboard {
+    pub const fn queens(&self) -> Bitboard {
         self.roles[Role::Queen as usize]
     }
 
-    pub fn kings(&self) -> Bitboard {
+    pub const fn kings(&self) -> Bitboard {
         self.roles[Role::King as usize]
     }
 
-    pub fn by_role(&self, role: Role) -> Bitboard {
+    pub const fn by_role(&self, role: Role) -> Bitboard {
         self.roles[role as usize]
     }
 
