@@ -6,6 +6,7 @@ mod board;
 mod color;
 mod engine;
 mod file;
+mod moves;
 mod piece;
 mod position;
 mod rank;
