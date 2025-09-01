@@ -7,3 +7,15 @@ impl Engine {
         BANNER
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn banner_works() {
+        let engine = Engine {};
+        let result = engine.banner();
+        assert_eq!(result, BANNER);
+    }
+}
