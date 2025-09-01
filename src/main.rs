@@ -1,7 +1,8 @@
-use crate::engine::BANNER;
+use crate::engine::Engine;
 
 pub mod engine;
 
 fn main() {
-    println!("{}", BANNER);
+    let engine = Engine {};
+    println!("{}", engine.banner());
 }
