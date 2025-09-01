@@ -1,3 +1,7 @@
+use crate::engine::BANNER;
+
+pub mod engine;
+
 fn main() {
-    println!("Hello, world!");
+    println!("{}", BANNER);
 }
