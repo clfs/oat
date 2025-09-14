@@ -180,7 +180,7 @@ impl Square {
     pub fn new(file: File, rank: Rank) -> Square {
         let f = file as u8;
         let r = rank as u8;
-        Square::try_from(f << 3 | r).unwrap()
+        Square::try_from(r << 3 | f).unwrap()
     }
 
     /// Return the file that the square is on.
@@ -282,5 +282,15 @@ mod tests {
     #[test]
     fn test_square_file() {
         assert_eq!(Square::B7.file(), File::B)
+    }
+
+    #[test]
+    fn test_square_rank() {
+        assert_eq!(Square::B7.rank(), Rank::Seventh)
+    }
+
+    #[test]
+    fn test_square_new() {
+        assert_eq!(Square::new(File::B, Rank::Seventh), Square::B7)
     }
 }
