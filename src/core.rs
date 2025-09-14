@@ -1,4 +1,5 @@
 /// The color of a piece, player, or square.
+#[derive(Debug, PartialEq)]
 pub enum Color {
     White,
     Black,
@@ -17,6 +18,7 @@ impl TryFrom<u8> for Color {
 }
 
 /// The role of a piece.
+#[derive(Debug, PartialEq)]
 pub enum Role {
     Pawn,
     Knight,
@@ -43,6 +45,7 @@ impl TryFrom<u8> for Role {
 }
 
 /// A file on the board.
+#[derive(Debug, PartialEq)]
 pub enum File {
     A,
     B,
@@ -73,6 +76,7 @@ impl TryFrom<u8> for File {
 }
 
 /// A rank on the board.
+#[derive(Debug, PartialEq)]
 pub enum Rank {
     First,
     Second,
@@ -103,6 +107,7 @@ impl TryFrom<u8> for Rank {
 }
 
 /// A square on the board.
+#[derive(Debug, PartialEq)]
 pub enum Square {
     A1,
     B1,
@@ -262,5 +267,20 @@ impl TryFrom<u8> for Square {
             63 => Ok(Square::H8),
             _ => Err(()),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_color_try_from() {
+        assert_eq!(Color::try_from(1), Ok(Color::Black))
+    }
+
+    #[test]
+    fn test_square_file() {
+        assert_eq!(Square::B7.file(), File::B)
     }
 }
