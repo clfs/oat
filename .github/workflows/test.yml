@@ -1,4 +1,4 @@
-name: Build, lint, and test with Cargo
+name: Run tests with Cargo
 
 on:
   push:
@@ -17,8 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build_and_test:
-    name: Build and test on latest
+  test:
+    name: Test on latest
     timeout-minutes: 5
     runs-on: ubuntu-latest
     strategy:
