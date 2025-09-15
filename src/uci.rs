@@ -35,14 +35,13 @@ impl str::FromStr for Command {
         let line = lines.next().ok_or(())?;
 
         // Ensure there isn't a second line.
-        let _ = match lines.next() {
-            Some(..) => return Err(()),
-            None => {}
-        };
+        if lines.next().is_some() {
+            return Err(());
+        }
 
         let mut fields = line.split_whitespace();
 
-        return match fields.next() {
+        match fields.next() {
             Some("id") => {
                 let b = fields.next();
                 let c = fields.next();
@@ -59,7 +58,7 @@ impl str::FromStr for Command {
             Some("uci") => Ok(Command::Uci),
             Some("uciok") => Ok(Command::UciOk),
             _ => Err(()),
-        };
+        }
     }
 }
 
