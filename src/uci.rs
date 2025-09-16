@@ -6,6 +6,7 @@ pub enum Command {
     Id(Id),
     IsReady,
     ReadyOk,
+    Quit,
     Uci,
     UciOk,
 }
@@ -19,6 +20,7 @@ impl fmt::Display for Command {
             },
             Self::IsReady => write!(f, "isready"),
             Self::ReadyOk => write!(f, "readyok"),
+            Self::Quit => write!(f, "quit"),
             Self::Uci => write!(f, "uci"),
             Self::UciOk => write!(f, "uciok"),
         }
@@ -55,6 +57,7 @@ impl str::FromStr for Command {
             Some("readyok") => Ok(Self::ReadyOk),
             Some("uci") => Ok(Self::Uci),
             Some("uciok") => Ok(Self::UciOk),
+            Some("quit") => Ok(Self::Quit),
             _ => Err(()),
         }
     }
