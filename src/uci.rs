@@ -1,7 +1,7 @@
 use std::fmt;
 use std::str;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum Command {
     Id(Id),
     IsReady,
@@ -13,14 +13,14 @@ pub enum Command {
 impl fmt::Display for Command {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Command::Id(id) => match id {
-                Id::Name(s) => write!(f, "id name {}", s),
-                Id::Author(s) => write!(f, "id author {}", s),
+            Self::Id(id) => match id {
+                Id::Name(s) => write!(f, "id name {s}"),
+                Id::Author(s) => write!(f, "id author {s}"),
             },
-            Command::IsReady => write!(f, "isready"),
-            Command::ReadyOk => write!(f, "readyok"),
-            Command::Uci => write!(f, "uci"),
-            Command::UciOk => write!(f, "uciok"),
+            Self::IsReady => write!(f, "isready"),
+            Self::ReadyOk => write!(f, "readyok"),
+            Self::Uci => write!(f, "uci"),
+            Self::UciOk => write!(f, "uciok"),
         }
     }
 }
@@ -46,26 +46,24 @@ impl str::FromStr for Command {
                 let b = fields.next();
                 let c = fields.next();
                 match (b, c) {
-                    (Some("name"), Some(name)) => Ok(Command::Id(Id::Name(name.to_string()))),
-                    (Some("author"), Some(author)) => {
-                        Ok(Command::Id(Id::Author(author.to_string())))
-                    }
+                    (Some("name"), Some(name)) => Ok(Self::Id(Id::Name(name.to_owned()))),
+                    (Some("author"), Some(author)) => Ok(Self::Id(Id::Author(author.to_owned()))),
                     _ => Err(()),
                 }
             }
-            Some("isready") => Ok(Command::IsReady),
-            Some("readyok") => Ok(Command::ReadyOk),
-            Some("uci") => Ok(Command::Uci),
-            Some("uciok") => Ok(Command::UciOk),
+            Some("isready") => Ok(Self::IsReady),
+            Some("readyok") => Ok(Self::ReadyOk),
+            Some("uci") => Ok(Self::Uci),
+            Some("uciok") => Ok(Self::UciOk),
             _ => Err(()),
         }
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum Id {
-    Name(String),
     Author(String),
+    Name(String),
 }
 
 #[cfg(test)]
